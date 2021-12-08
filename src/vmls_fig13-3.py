@@ -4,13 +4,13 @@
 # https://www.worldometers.info/oil/#oil-consumption .
 
 import numpy as np
-import leastsquares as ls
+#import leastsquares as ls
+#import atime as t
 import matplotlib.pyplot as plt
-import atime as t
 from data import world_oil_consumption_yearly
 
 # Construção de A e b
-b = np.array(world_oil_consumption_yearly())
+b = world_oil_consumption_yearly()
 A = np.column_stack((np.ones(b.size), np.arange(b.size)))
 
 # Avaliando o tempo de execução
@@ -18,10 +18,10 @@ A = np.column_stack((np.ones(b.size), np.arange(b.size)))
 
 # Calculando para o plot
 x = np.linalg.lstsq(A, b, rcond = None)[0]
-# x = ls.qrp(A, b) # via QR (por Gram-Schmidt)
-# x = ls.qrnp(A, b) # via QR (pelo numpy)
-# x = ls.neq(A, b) # via equações normais
-# x = ls.svd(A, b) # via SVD
+#x = ls.qrp(A, b) # via QR (por Gram-Schmidt)
+#x = ls.qrnp(A, b) # via QR (pelo numpy)
+#x = ls.neq(A, b) # via equações normais
+#x = ls.svd(A, b) # via SVD
 
 # Plotando o gráfico
 plt.figure(figsize=(7,6))
