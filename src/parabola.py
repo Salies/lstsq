@@ -1,9 +1,11 @@
-import leastsquares as ls
+#import leastsquares as ls
 import numpy as np
 import matplotlib.pyplot as plt
 from data import parabola
+#import atime as t
 
-# 
+
+# Dados de x e y = b da "pseudo-parábola"
 data_x, b = parabola()
 
 A = np.column_stack((
@@ -11,6 +13,8 @@ A = np.column_stack((
     data_x,
     np.square(data_x)
 ))
+
+#t.calc_time(A, b)
 
 x = np.linalg.lstsq(A, b, rcond = None)[0]
 #x = ls.qrp(A, b) # via QR (por Gram-Schmidt)
