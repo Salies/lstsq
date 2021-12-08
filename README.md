@@ -35,6 +35,7 @@ estão funcionando corretamente.
 * `parabola.py` - cria uma aproximação de uma função quadrática a partir de postos
 distribuídos de forma similar a uma parábola.
 * `utcfr_exercicio.py` - resolve um exercício disponível [neste material](http://www.utc.fr/~mottelet/mt94/leastSquares.pdf). Nele, encontra-se a aproximação de um círculo para pontos dispostos em "formato" circular.
+* `neqerr.py` - ilustra como a solução via equações normais pode produzir resultados com erro grande quando recebe matrizes mal-condicionadas.
 
 ---
 
