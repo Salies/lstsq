@@ -33,7 +33,7 @@ yf = np.vstack(y_og)
 #print(x_noisy)
 #ff = lambda theta: np.vstack(f(theta, x_noisy) - y_og)
 #Dff = lambda theta: Df(theta, np.vstack(x_noisy))
-ff = lambda theta : theta[0] * np.exp(theta[1] * xf) * np.sin(theta[2] * xf) - yf
+ff = lambda theta : np.vstack(theta[0] * np.exp(theta[1] * xf) * np.sin(theta[2] * xf) - yf)
 Dff = lambda theta : np.hstack([
     (np.exp(theta[1] * xf) * np.sin(theta[2] * xf)),
     (theta[0] * xf * np.exp(theta[1] * xf) * np.sin(theta[2] * xf)),
