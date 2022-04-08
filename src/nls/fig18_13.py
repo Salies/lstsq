@@ -16,6 +16,9 @@ yd = np.vstack(theta_ex[0] * np.exp(theta_ex[1]*xd) *
 N = len(xd.ravel())
 yd = np.vstack(yd.ravel()) * np.vstack((1 + .2 * np.random.randn(N)))+.015 * np.vstack(np.random.randn(N))
 
+print(len(xd))
+print(len(yd))
+
 # Preparando as funções
 def f(theta): return theta[0] * np.exp(theta[1] * xd) * np.cos(theta[2] * xd + theta[3]) - yd
 
