@@ -17,7 +17,7 @@ Df_y = lambda x, theta: np.hstack([
     theta[0] * x * np.exp(theta[1] * x) * np.sin(x)
 ])
 
-x_og = np.linspace(0, 8 * np.pi, 100)
+x_og = np.linspace(-3, 8 * np.pi, 100)
 theta_og = np.vstack([1, .2])
 
 # Aproximando o resultado x primeiro
@@ -36,8 +36,8 @@ print(theta_res_a)
 y_b_og = f_y(x_og, theta_og)
 ybf = np.vstack(y_b_og)
 
-ff_b = lambda theta: f_x(xf, theta) - yaf
-Dff_b = lambda theta: Df_x(xf, theta)
+ff_b = lambda theta: f_y(xf, theta) - ybf
+Dff_b = lambda theta: Df_y(xf, theta)
 
 theta_res_b = levenberg_marquardt(ff_b, Dff_b, np.vstack([1, 0]), 1.0)
 print(theta_res_b)
