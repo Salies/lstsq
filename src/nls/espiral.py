@@ -1,47 +1,29 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from nls import levenberg_marquardt, gauss_newton, newton
+import scipy.optimize as sciop
 
-# TODO: código um pouco bagunçado, melhorar depois
+# Para 500 pontos entre -3 e 8pi
+const = 200
+x = np.linspace(-3, 8 * np.pi, const)
 
-f_x = lambda x, theta: theta[0] * np.cos(x) * np.exp(x * theta[1])
-f_y = lambda x, theta: theta[0] * np.sin(x) * np.exp(x * theta[1])
+# Função
+f = lambda theta: np.array([theta[0] * np.cos(x) * np.exp(x * theta[1]), 
+                            theta[0] * np.sin(x) * np.exp(x * theta[1])])
+res1 = f([1, .2])
+res_noise = [res1[0] + np.random.normal(0, 12, const), res1[1] + np.random.normal(0, 12, const)]
+ff = lambda theta: (f(theta) - res_noise).flatten()
 
-Df_x = lambda x, theta: np.hstack([
-    np.exp(theta[1] * x) * np.cos(x),
-    theta[0] * x * np.exp(theta[1] * x) * np.cos(x)
-])
+# Resposta original
+res1 = f([1, .2])
+# Número 12 obtido empiricamente
+#ff = lambda theta: f(theta) #+ np.random.normal(0, 10, const)
+#res1 = ff([1, .2])
+res_aprox = sciop.least_squares(ff, [0, 0])
+print(res_aprox)
+faprox = f(res_aprox.x)
 
-Df_y = lambda x, theta: np.hstack([
-    np.exp(theta[1] * x) * np.sin(x),
-    theta[0] * x * np.exp(theta[1] * x) * np.sin(x)
-])
 
-x_og = np.linspace(-3, 8 * np.pi, 100)
-theta_og = np.vstack([1, .2])
-
-# Aproximando o resultado x primeiro
-y_a_og = f_x(x_og, theta_og)
-x_noisy = x_og + np.random.normal(0, 0.1, 100) * 0.75
-xf = np.vstack(x_noisy)
-yaf = np.vstack(y_a_og)
-
-ff_a = lambda theta: f_x(xf, theta) - yaf
-Dff_a = lambda theta: Df_x(xf, theta)
-
-theta_res_a = levenberg_marquardt(ff_a, Dff_a, np.vstack([1, 0]), 1.0)
-print(theta_res_a)
-
-# O mesmo para y
-y_b_og = f_y(x_og, theta_og)
-ybf = np.vstack(y_b_og)
-
-ff_b = lambda theta: f_y(xf, theta) - ybf
-Dff_b = lambda theta: Df_y(xf, theta)
-
-theta_res_b = levenberg_marquardt(ff_b, Dff_b, np.vstack([1, 0]), 1.0)
-print(theta_res_b)
-
-plt.plot(f_x(x_og, theta_og), f_y(x_og, theta_og), color="blue")
-plt.plot(f_x(x_og, theta_res_a), f_y(x_og, theta_res_b), color="red")
+plt.scatter(res_noise[0], res_noise[1], color="blue")
+plt.plot(faprox[0], faprox[1], color="red")
 plt.show()

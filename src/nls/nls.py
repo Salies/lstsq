@@ -6,6 +6,7 @@
 # Implementações baseadas nos pseudoalgoritmos do VMLS.
 
 import numpy as np
+import numpy.linalg as npl
 import sympy
 
 # Funções para resolver as equações lineares,
@@ -56,7 +57,7 @@ def newton(f, Df, x1, k_max = 10, err = 1e-6):
         xk = xk - safe_solve(fxk, Df(xk))
     return xk
 
-def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, err = 1e-6):
+'''def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, err = 1e-6):
     xk = x1
     l = lambda1 # lambda é palavra reservada em Python
     N = len(x1)
@@ -77,5 +78,26 @@ def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, err = 1e-6):
             continue
         # Não atualiza o x
         l *= 2.0
-    return xk
+    return xk'''
+
+def levenberg_marquardt(f, Df, x1, lambda1, kmax = 100, tol = 1e-6):
+    n = len(x1)
+    x = x1
+    lambd = lambda1
+    objectives = [] 
+    residuals = []
+    for k in range(kmax):
+        fk = f(x)
+        Dfk = Df(x)
+        objectives.append(npl.norm(fk)**2)
+        residuals.append(npl.norm(2*np.matmul(Dfk.T,fk)))
+        if npl.norm(2*np.matmul(Dfk.T,fk)) < tol:
+            break
+        xt = x - npl.lstsq(np.vstack([Dfk,np.sqrt(lambd)*np.eye(n)]),np.vstack([fk,np.zeros((n,1))]))[0]
+        if npl.norm(f(xt)) < npl.norm(fk):
+            lambd = .8*lambd
+            x = xt
+        else:
+            lambd = 2.0*lambd
+    return x, dict([("objectives", objectives),("residuals",residuals)])
 
