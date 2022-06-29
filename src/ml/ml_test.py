@@ -24,7 +24,9 @@ y = iris[:, 2]
 
 w = 0.0
 b = 0.0
-learning_rate = 0.0005
+# Tem que tomar muito cuidado na hora de escolher o learning rate!
+# TODO: tentar automatizar isso
+learning_rate = 5*10e-6
 
 predictions = [f(_x, w, b) for _x in x]
 
@@ -37,18 +39,17 @@ print("w: " + str(w) + ", " + str(b))
 
 # Otimiza por gradiente descendente
 # TODO: Peguei o algoritmo de gradiente descendente de algum lugar, verificar e corrigir depois
+# Extendi o algoritmo pra suportar o b (bias) também - 
 for i in range(20000):
-    accumulated_grad_w0 = 0
-    accumulated_grad_b = 0   
+    r = 1.0
+    acc_grad_w0 = 0
+    acc_grad_b = 0
     for _x, y_target in zip(x, y):
-        accumulated_grad_w0 += (f(_x, w, b) - y_target)*_x
-        accumulated_grad_b += (f(_x, w, b) - y_target)   
+        acc_grad_w0 += (f(_x, w, b) - y_target)*_x
+        acc_grad_b += (f(_x, w, b) - y_target)
 
-    w_grad = (1.0/len(x)) * accumulated_grad_w0
-    b_grad = (1.0/len(x)) * accumulated_grad_b 
-
-    w = w - learning_rate * w_grad
-    b = b - learning_rate * b_grad
+    w -= learning_rate * acc_grad_w0 * r
+    b -= learning_rate * acc_grad_b * r
 
     if i % 1000 == 0:
         print("\nIteração " + str(i))
