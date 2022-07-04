@@ -20,17 +20,17 @@ def solve(A, b):
 
 def gauss_newton(f, Df, x1, k_max = 100, tol = 1e-6):
     xk = x1
-    for _ in range(k_max):
+    for k in range(k_max):
         if(np.linalg.norm(f(xk)) < tol):
             break
         # Iteração do método de Gauss-Newton
         # Fórmula (18.6) do VMLS
         xk -= lstsq(Df(xk), f(xk))
-    return xk
+    return {'x': xk, 'it': k}
 
 def newton(f, Df, x1, k_max = 100, tol = 1e-6):
     xk = x1
-    for _ in range(k_max):
+    for k in range(k_max):
         if(np.linalg.norm(f(xk)) < tol):
             break
         # Iteração do método de Newton
@@ -38,12 +38,12 @@ def newton(f, Df, x1, k_max = 100, tol = 1e-6):
         # Basicamente, como sabe-se que f: R^n -> R^n, pode-se
         # apenas resolver um sistema linear.
         xk -= solve(Df(xk), f(xk))
-    return xk  
+    return {'x': xk, 'it': k}
 
 def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, tol = 1e-6):
     xk = x1
     l = lambda1 # variável l pois lambda é uma palavra reservada em Python
-    for _ in range(k_max):
+    for k in range(k_max):
         # pág. 393 VMLS
         # Stopping criteria - Small residual
         if(np.linalg.norm(f(xk)) < tol):
@@ -60,4 +60,4 @@ def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, tol = 1e-6):
             xk = x_next
         else:
             l *= 2.0
-    return xk
+    return {'x': xk, 'it': k}
