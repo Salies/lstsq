@@ -34,6 +34,8 @@ def levenberg_marquardt(f, Df, x1, lambda1, kmax = 100, tol = 1e-6):
             lambd = 2.0*lambd
     return {'x': x, 'it': k}
 
+# Este mesmo teste com x1 = 1.15 leva a um erro por overflow
+# (não convergência)
 t1 = newton(f, Df, 0.95, 20, 1e-6)
 t2 = gauss_newton(f, Df, 0.95, 20, 1e-6)
 t3 = levenberg_marquardt(f,Df, np.array([0.95]), 1.0, 20)
