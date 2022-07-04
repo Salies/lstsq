@@ -6,7 +6,6 @@
 # Implementações baseadas nos pseudoalgoritmos do VMLS.
 
 import numpy as np
-import sympy
 
 # Suporte para manipulação de escalares
 def lstsq(A, b):
