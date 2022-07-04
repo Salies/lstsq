@@ -11,4 +11,3 @@ Df = lambda x: (4 * np.exp(2 * x)) / ((np.exp(2 * x) + 1)**2)
 
 print(newton(f, Df, 0.95, 20, 1e-6))
 print(gauss_newton(f, Df, 0.95, 20, 1e-6))
-print(levenberg_marquardt(f, Df, 0.95, 1.0, 20, 1e-6))

@@ -19,18 +19,6 @@ def solve(A, b):
         return np.divide(b, A)
     return np.linalg.inv(A) @ b
 
-# Para lm
-# Stopping criteria - Small optimality condition residual
-def lm_op_res(A, b):
-    if(np.isscalar(A)):
-        return 2 * A * b
-    return 2 * A.T @ b
-
-def lm_iteration(A, b, l, n):
-    if(np.isscalar(A)):
-        return np.divide(b, A) + (1.0 / l)
-    return np.linalg.inv(A.T @ A + l * np.eye(n)) @ A.T @ b
-
 def gauss_newton(f, Df, x1, k_max = 100, tol = 1e-6):
     xk = x1
     for _ in range(k_max):
@@ -55,7 +43,6 @@ def newton(f, Df, x1, k_max = 100, tol = 1e-6):
 
 def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, tol = 1e-6):
     xk = x1
-    x_shape = None if np.isscalar(x1) else x1.shape[0]
     l = lambda1 # variável l pois lambda é uma palavra reservada em Python
     for _ in range(k_max):
         # pág. 393 VMLS
@@ -63,9 +50,10 @@ def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, tol = 1e-6):
         if(np.linalg.norm(f(xk)) < tol):
             break
         # Stopping criteria - Small optimality condition residual
-        if(np.linalg.norm(lm_op_res(Df(xk), f(xk))) < tol):
+        if(np.linalg.norm(2 * Df(xk).T @ f(xk)) < tol):
             break
-        x_next = xk - lm_iteration(Df(xk), f(xk), l, x_shape)
+        A = Df(xk)
+        x_next = xk - np.linalg.inv(A.T @ A + l * np.eye(x1.shape[0])) @ A.T @ f(xk)
         # Passo 3 do pseudo-algoritmo do VMLS
         # Definindo lambda e o valor de x
         if(np.linalg.norm(f(x_next)) < np.linalg.norm(f(xk))):
