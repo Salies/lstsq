@@ -48,10 +48,9 @@ def levenberg_marquardt(f, Df, x1, lambda1, k_max = 100, tol = 1e-6):
     for k in range(k_max):
         # pág. 393 VMLS
         # Stopping criteria - Small residual
-        if(np.linalg.norm(f(xk)) < tol):
-            break
+        # or
         # Stopping criteria - Small optimality condition residual
-        if(np.linalg.norm(2 * Df(xk).T @ f(xk)) < tol):
+        if(np.linalg.norm(f(xk)) < tol or np.linalg.norm(2 * Df(xk).T @ f(xk)) < tol):
             break
         A = Df(xk)
         x_next = xk - np.linalg.inv(A.T @ A + l * np.identity(x1.shape[0])) @ A.T @ f(xk)
