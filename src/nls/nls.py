@@ -15,6 +15,7 @@ def lstsq(A, b):
 
 def solve(A, b):
     if(np.isscalar(A)):
+        # Fórmula (18.9) VMLS
         return np.divide(b, A)
     return np.linalg.inv(A) @ b
 
