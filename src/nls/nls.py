@@ -11,13 +11,13 @@ import numpy as np
 def lstsq(A, b):
     if(np.isscalar(A)):
         return np.divide(b, A)
-    return np.linalg.inv((A.T @ A)) @ A.T @ b
+    return np.linalg.lstsq(A, b, rcond=None)[0]
 
 def solve(A, b):
     if(np.isscalar(A)):
         # Fórmula (18.9) VMLS
         return np.divide(b, A)
-    return np.linalg.inv(A) @ b
+    return np.linalg.solve(A, b)
 
 # Métodos para resolução de mínimos quadrados não-lineares
 def gauss_newton(f, Df, x1, k_max = 100, tol = 1e-6):

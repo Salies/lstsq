@@ -1,7 +1,7 @@
 # Recriação aproximada do caso apresentando na figura 18.13 do VMLS.
 
 import numpy as np
-from nls import levenberg_marquardt, gauss_newton, newton
+from nls import levenberg_marquardt
 import matplotlib.pyplot as plt
 
 x = np.linspace(0, 10, 300)
@@ -11,7 +11,7 @@ f = lambda x, theta: theta[0] * np.exp(theta[1] * x) * np.cos(theta[2] * x + the
 
 # Definindo sua matriz jacobiana
 # (mostrada na explicação)
-Df = lambda x, theta: np.hstack([
+Df = lambda x, theta: np.column_stack([
     (np.exp(theta[1] * x) * np.cos((theta[2] * x) + theta[3])),
     (theta[0] * x * np.exp(theta[1] * x) * np.cos((theta[2] * x) + theta[3])),
     -1.0 * (theta[0] * x * np.exp(theta[1] * x) * np.sin((theta[2] * x) + theta[3])),
@@ -33,7 +33,7 @@ ff = lambda theta: f(x_noisy, theta) - y_noisy
 Dff = lambda theta: Df(x_noisy, theta)
 theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
 
-print(theta['it'])
+print(theta)
 plt.scatter(x_noisy, y_noisy, facecolors='none', edgecolors='#00ff00')
 plt.plot(x, f(x, theta['x']))
 plt.show()
