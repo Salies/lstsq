@@ -6,7 +6,7 @@ from nls import gauss_newton, newton
 # A função f converge muito rapidamente para 0
 # Logo, espera-se que o resultado obtido seja muito próximo de 0
 
-f = lambda x: (np.exp(x) - np.exp(-x))/(np.exp(x)+np.exp(-x))
+f = lambda x: (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
 # Derivada de f
 Df = lambda x: (4 * np.exp(2 * x)) / ((np.exp(2 * x) + 1)**2)
 
@@ -36,6 +36,7 @@ def levenberg_marquardt(f, Df, x1, lambda1, kmax = 100, tol = 1e-6):
 
 # Este mesmo teste com x1 = 1.15 leva a um erro por overflow
 # (não convergência)
+# Apenas LM converge independentemente do caso
 t1 = newton(f, Df, 0.95, 20, 1e-6)
 t2 = gauss_newton(f, Df, 0.95, 20, 1e-6)
 t3 = levenberg_marquardt(f,Df, np.array([0.95]), 1.0, 20)
