@@ -38,7 +38,7 @@ eig = np.linalg.eigvals(A)
 
 # 0 < learning_rate < 2 / (autovalor máx. de A)
 # pego o "meio termo"
-learning_rate = (2 / np.max(eig)) * 0.5
+learning_rate = 1.0 / np.max(eig)
 
 print(f"Estado inicial:\nerro acumulado: {lse(f(x, w, b), y)}\nw: {w}, b: {b}")
 
