@@ -29,7 +29,6 @@ def lm_update(A, b, l, shape):
         # Fórmula (18.13) do VMLS
         return (A / (l + (A ** 2))) * b
     return np.linalg.inv(A.T @ A + l * np.identity(shape)) @ A.T @ b
-    
 
 # Métodos para resolução de mínimos quadrados não-lineares
 def gauss_newton(f, Df, x1, k_max = 100, tol = 1e-6):
