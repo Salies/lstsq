@@ -3,7 +3,7 @@ import numpy.linalg as npl
 from nls import gauss_newton, newton, levenberg_marquardt
 
 # Teste do exemplo (18.10) do VMLS
-# A função f converge muito rapidamente para 0
+# A função f tem solução única de f(x) = 0 em x = 0
 # Logo, espera-se que o resultado obtido seja muito próximo de 0
 
 f = lambda x: (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
