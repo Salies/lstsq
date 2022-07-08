@@ -40,19 +40,19 @@ eig = np.linalg.eigvals(A)
 # pego o "meio termo"
 learning_rate = 1.0 / np.max(eig)
 
-print(f"Estado inicial:\nerro acumulado: {lse(f(x, a, b), y)}\na: {a}, b: {b}")
+print(f"Estado inicial:: err: {lse(f(x, a, b), y)}, a: {a}, b: {b}")
 
-for i in range(10000):
+for k in range(10000):
     # Atualizando por gradiente descendente, de acordo com Fujii
     prediction_err = y - f(x, a, b)
     a += learning_rate * np.sum(prediction_err * x)
     b += learning_rate * np.sum(prediction_err)
 
     # Relata a cada 100 iterações
-    if i % 100 == 0:
-        print(f"\nIteração {i}:\nerro acumulado: {lse(f(x, a, b), y)}\na: {a}, b: {b}")
+    if k % 100 == 0:
+        print(f"k {k}:, err: {lse(f(x, a, b), y)}, a: {a}, b: {b}")
             
-print(f"\nEstado final:\nerro acumulado: {lse(f(x, a, b), y)}\na: {a}, b: {b}")
+print(f"Estado final:: err: {lse(f(x, a, b), y)}, a: {a}, b: {b}")
 
 # A partir da Sepal Length, tentar prever a Petal Length
 plt.scatter(iris[:, 0], iris[:, 2], color='none', edgecolors='violet')
