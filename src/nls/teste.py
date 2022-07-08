@@ -16,9 +16,10 @@ Df = lambda x: (4 * np.exp(2 * x)) / ((np.exp(2 * x) + 1)**2)
 t1 = newton(f, Df, 0.95, 20)
 t2 = gauss_newton(f, Df, 0.95, 20)
 t3 = levenberg_marquardt(f,Df, 0.95, 1.0, 20)
+t4 = levenberg_marquardt(f,Df, 1.15, 1.0, 20)
 
-print(t1['x'], t2['x'], t3['x'])
-print(t1['it'], t2['it'], t3['it'])
+print(t1['x'], t2['x'], t3['x'], t4['x'])
+print(t1['it'], t2['it'], t3['it'], t4['it'])
 
 # Como pode-se observar, lm leva mais iterações para convergir
 # e converge mais lentamente, dada a existência do atributo lambda 
