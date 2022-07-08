@@ -10,6 +10,10 @@ x = np.linspace(-3, 8 * np.pi, const)
 # Função
 f = lambda theta: np.array([theta[0] * np.cos(x) * np.exp(x * theta[1]), 
                             theta[0] * np.sin(x) * np.exp(x * theta[1])])
+'''df = lambda theta: np.matrix([
+    [np.exp(theta[1] * x) * np.cos(x), theta[0] * x * np.exp(theta[1] * x) * np.cos(x)],
+    [np.exp(theta[1] * x) * np.sin(x), theta[0] * x * np.exp(theta[1] * x) * np.sin(x)]
+])'''
 xy = f([1, .2])
 xy_noise = [xy[0] + np.random.normal(0, 12, const), xy[1] + np.random.normal(0, 12, const)]
 ff = lambda theta: (f(theta) - xy_noise).flatten()
