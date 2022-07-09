@@ -42,7 +42,7 @@ learning_rate = 1.0 / np.max(eig)
 
 print(f"Estado inicial:: err: {lse(f(x, a, b), y)}, a: {a}, b: {b}")
 
-# Sem condição de terminação - faça 10000 iterações
+# Sem condição de terminação - faça 10000
 for k in range(10000):
     # Atualizando por gradiente descendente, de acordo com Fujii
     prediction_err = y - f(x, a, b)

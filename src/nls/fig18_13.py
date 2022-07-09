@@ -1,7 +1,7 @@
 # Recriação aproximada do caso apresentando na figura 18.13 do VMLS.
 
 import numpy as np
-from nls import levenberg_marquardt
+from nls import levenberg_marquardt, gauss_newton
 import matplotlib.pyplot as plt
 
 x = np.linspace(0, 10, 300)
@@ -31,7 +31,8 @@ y_noisy = np.vstack(y + np.random.normal(0, 0.25, 300) * 0.75)
 # y deve ser subtraído (fórmula (18.4), pág. 386 do VMLS)
 ff = lambda theta: f(x_noisy, theta) - y_noisy
 Dff = lambda theta: Df(x_noisy, theta)
-theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
+#theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
+#theta = gauss_newton(ff, Dff, np.vstack([1.0, 0.0, 3.0, 0.0])) # não converge
 
 print(theta)
 plt.scatter(x_noisy, y_noisy, facecolors='none', edgecolors='#00ff00')
