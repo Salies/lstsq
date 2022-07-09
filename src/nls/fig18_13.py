@@ -35,6 +35,9 @@ theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
 #theta = gauss_newton(ff, Dff, np.vstack([1.0, 0.0, 3.0, 0.0])) # não converge
 
 print(theta)
-plt.scatter(x_noisy, y_noisy, facecolors='none', edgecolors='#00ff00')
-plt.plot(x, f(x, theta['x']))
+plt.scatter(x_noisy, y_noisy, facecolors='none', edgecolors='#00ff00', label='Pontos perturbados da função original')
+plt.plot(x, f(x, theta['x']), label='Regressão não linear')
+plt.xlabel("x", fontsize=16)
+plt.ylabel("y", fontsize=16)
+plt.legend(prop={'size': 14})
 plt.show()

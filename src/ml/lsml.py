@@ -56,6 +56,9 @@ for k in range(10000):
 print(f"Estado final:: err: {lse(f(x, a, b), y)}, a: {a}, b: {b}")
 
 # A partir da Sepal Length, tentar prever a Petal Length
-plt.scatter(iris[:, 0], iris[:, 2], color='none', edgecolors='violet')
-plt.plot(iris[:, 0], a * iris[:, 0] + b, color='red')
+plt.scatter(iris[:, 0], iris[:, 2], color='none', edgecolors='violet', label='Flor')
+plt.plot(iris[:, 0], a * iris[:, 0] + b, color='red', label='Regressão linear')
+plt.xlabel("Comprimento da sépala", fontsize=16)
+plt.ylabel("Comprimento da pétala", fontsize=16)
+plt.legend(prop={'size': 14})
 plt.show()
