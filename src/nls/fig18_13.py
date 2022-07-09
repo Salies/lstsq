@@ -31,7 +31,7 @@ y_noisy = np.vstack(y + np.random.normal(0, 0.25, 300) * 0.75)
 # y deve ser subtraído (fórmula (18.4), pág. 386 do VMLS)
 ff = lambda theta: f(x_noisy, theta) - y_noisy
 Dff = lambda theta: Df(x_noisy, theta)
-#theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
+theta = levenberg_marquardt(ff, Dff, np.vstack([1, 0, 3, 0]), 1.0)
 #theta = gauss_newton(ff, Dff, np.vstack([1.0, 0.0, 3.0, 0.0])) # não converge
 
 print(theta)
